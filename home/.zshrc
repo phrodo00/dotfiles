@@ -7,7 +7,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sorin"
 DISABLE_AUTO_UPDATE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(git cp python rails3 python rsync screen systemd pip archlinux
+plugins=(git cp python rails python rsync screen systemd pip archlinux
          coffee django gnu-utils history-substring-search npm rake vundle
          virtualenvwrapper gem)
 
