@@ -1,0 +1,47 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" UI
+set relativenumber
+set shortmess=filmnrxsItToO
+set colorcolumn=+1,79
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Identation
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
+set smarttab
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Key maps
+inoremap jj <ESC>
+map <DOWN> gj
+map <UP> gk
+"  Windows
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+"  System Keyboard
+vnoremap <C-Insert> "+y
+map <S-Insert> "+gP
+cmap <S-Insert> <C-R>+
+"  Stupid vim-bootstrap bindings
+nunmap YY
+nunmap P
+nunmap XX
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Undo
+set undodir=~/.vim/var/undo
+set undofile
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Graphical mode
+if has("gui_running")
+    set lines=40 columns=90
+    let do_syntax_sel_menu = 1|runtime! synmenu.vim|aunmenu &Syntax.&Show\ filetypes\ in\ menu
+    set spelllang=es_es
+    set nospell
+    "airline
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
+	let g:airline_powerline_fonts = 1
+endif
+
