@@ -1,0 +1,20 @@
+[ui]
+username = Javier Aravena Claramunt <javier@aravenas.com>
+style = compact
+
+[extensions]
+graphlog = 
+color =
+inotify = 
+churn = 
+mq = 
+notify = 
+progress = 
+rebase = 
+record = 
+shelve = 
+strip = 
+zeroconf = 
+purge = 
+hgext.mercurial_keyring = ~/.hgext/mercurial_keyring.py
+
