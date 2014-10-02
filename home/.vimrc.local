@@ -1,8 +1,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" UI
+" General
 set relativenumber
 set shortmess=filmnrxsItToO
 set colorcolumn=+1,79
+"  Wildmenu
+set wildmenu
+set wildmode=list:full
+"  Per-project vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Identation
 set shiftwidth=4
