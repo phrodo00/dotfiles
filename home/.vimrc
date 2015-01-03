@@ -1,6 +1,7 @@
 "*****************************************************************************
 "" NeoBundle core
 "*****************************************************************************
+
 if has('vim_starting')
   set nocompatible               " Be iMproved
 
@@ -53,7 +54,15 @@ NeoBundle 'honza/vim-snippets'
 "" Color
 NeoBundle 'tomasr/molokai'
 
+"" Vim-Bootstrap Updater
+NeoBundle 'sherzberg/vim-bootstrap-updater'
+
+let g:vim_bootstrap_langs = "c,ruby,go,python,html,javascript"
+
 "" Custom bundles
+
+NeoBundle 'vim-scripts/c.vim'
+
 
 "" Python Bundle
 NeoBundle "davidhalter/jedi-vim"
@@ -62,7 +71,8 @@ NeoBundle "majutsushi/tagbar"
 NeoBundle "Yggdroot/indentLine"
 
 
-NeoBundle 'vim-scripts/c.vim'
+"" Javascript Bundle
+NeoBundle "scrooloose/syntastic"
 
 
 "" HTML Bundle
@@ -72,16 +82,17 @@ NeoBundle 'gorodinskiy/vim-coloresque'
 NeoBundle 'tpope/vim-haml'
 
 
+"" Go Lang Bundle
+NeoBundle "majutsushi/tagbar"
+NeoBundle "fatih/vim-go"
+
+
 "" Ruby Bundle
 NeoBundle "tpope/vim-rails"
 NeoBundle "tpope/vim-rake"
 NeoBundle "tpope/vim-projectionist"
 NeoBundle "thoughtbot/vim-rspec"
 NeoBundle "majutsushi/tagbar"
-
-
-"" Javascript Bundle
-NeoBundle "scrooloose/syntastic"
 
 
 
@@ -104,10 +115,6 @@ set fileencodings=utf-8
 
 "" Fix backspace indent
 set backspace=indent,eol,start
-
-"" allow plugins by file type
-filetype on
-filetype plugin on
 
 "" Tabs. May be overriten by autocmd rules
 set tabstop=4
@@ -211,12 +218,14 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 "" no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
 cnoreabbrev Wq wq
 cnoreabbrev Wa wa
 cnoreabbrev wQ wq
 cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
+cnoreabbrev Qall qall
 
 "" NERDTree configuration
 let g:NERDTreeChDirMode=2
@@ -242,17 +251,21 @@ nnoremap <silent> <leader>sh :VimShellCreate<CR>
 "*****************************************************************************
 "" Functions
 "*****************************************************************************
-function s:setupWrapping()
-  set wrap
-  set wm=2
-  set textwidth=79
-endfunction
+if !exists('*s:setupWrapping')
+  function s:setupWrapping()
+    set wrap
+    set wm=2
+    set textwidth=79
+  endfunction
+endif
 
-function TrimWhiteSpace()
-  let @*=line(".")
-  %s/\s*$//e
-  ''
-endfunction
+if !exists('*TrimWhiteSpace')
+  function TrimWhiteSpace()
+    let @*=line(".")
+    %s/\s*$//e
+    ''
+  endfunction
+endif
 
 "*****************************************************************************
 "" Autocmd Rules
@@ -264,11 +277,11 @@ autocmd BufEnter * :syntax sync fromstart
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 "" txt
-au BufRead,BufNewFile *.txt call s:setupWrapping()
+autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
 
 "" make/cmake
-au FileType make set noexpandtab
-autocmd BufNewFile,BufRead CMakeLists.txt setlocal ft=cmake
+autocmd FileType make setlocal noexpandtab
+autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
 
 if has("gui_running")
   autocmd BufWritePre * :call TrimWhiteSpace()
@@ -287,6 +300,7 @@ noremap <Leader>v :<C-u>vsplit<CR>
 noremap <Leader>ga :!git add .<CR>
 noremap <Leader>gc :!git commit -m '<C-R>="'"<CR>
 noremap <Leader>gsh :!git push<CR>
+noremap <Leader>gll :!git pull<CR>
 noremap <Leader>gs :Gstatus<CR>
 noremap <Leader>gb :Gblame<CR>
 noremap <Leader>gd :Gvdiff<CR>
@@ -339,6 +353,10 @@ let g:airline_enable_syntastic = 1
 nnoremap <silent> <leader>S :call TrimWhiteSpace()<cr>:let @/=''<CR>
 
 "" Copy/Paste/Cut
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+endif
+
 noremap YY "+y<CR>
 noremap P "+gP<CR>
 noremap XX "+x<CR>
@@ -350,13 +368,13 @@ if has('macunix')
 endif
 
 "" Buffer nav
-noremap ,z :bp<CR>
-noremap ,q :bp<CR>
-noremap ,x :bn<CR>
-noremap ,w :bn<CR>
+noremap <leader>z :bp<CR>
+noremap <leader>q :bp<CR>
+noremap <leader>x :bn<CR>
+noremap <leader>w :bn<CR>
 
 "" Close buffer
-noremap ,c :bd<CR>
+noremap <leader>c :bd<CR>
 
 "" Clean search (highlight)
 nnoremap <silent> <leader><space> :noh<cr>
@@ -368,6 +386,11 @@ vmap > >gv
 "" Open current line on GitHub
 noremap ,o :!echo `git url`/blob/`git rev-parse --abbrev-ref HEAD`/%\#L<C-R>=line('.')<CR> \| xargs open<CR><CR>
 "" Custom configs
+
+" Tagbar
+nmap <silent> <F4> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
 
 " vim-python
 autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
@@ -396,18 +419,33 @@ nmap <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
 
+let g:javascript_enable_domhtmlcss = 1
+
+
+
+
 " Tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
-
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [  'p:package', 'i:imports:1', 'c:constants', 'v:variables',
+        \ 't:types',  'n:interfaces', 'w:fields', 'e:embedded', 'm:methods',
+        \ 'r:constructor', 'f:functions' ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : { 't' : 'ctype', 'n' : 'ntype' },
+    \ 'scope2kind' : { 'ctype' : 't', 'ntype' : 'n' },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
 
 
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
 
-au BufNewFile,BufRead *.rb,*.rbw,*.gemspec set filetype=ruby
+autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 
 " Tagbar
@@ -424,9 +462,6 @@ let g:tagbar_type_ruby = {
         \ 'F:singleton methods'
     \ ]
 \ }
-
-
-let g:javascript_enable_domhtmlcss = 1
 
 
 "" Include user's local vim config
