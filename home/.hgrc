@@ -16,5 +16,4 @@ shelve =
 strip = 
 zeroconf = 
 purge = 
-hgext.mercurial_keyring = ~/.hgext/mercurial_keyring.py
 
