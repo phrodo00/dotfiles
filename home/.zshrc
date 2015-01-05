@@ -56,16 +56,3 @@ alias pacaur='LC_ALL=en_US.utf8 pacaur'
 alias bower='noglob bower'
 alias youtube-dl='noglob youtube-dl'
 
-##############################################################################
-# ENVVARS
-##############################################################################
-
-export PAGER=most
-# go
-export GOPATH=$HOME/go
-export PATH=$PATH:$HOME/go/bin
-# full color vim in gnome-terminal.
-if [[ $COLORTERM == 'gnome-terminal' ]];then
-  export TERM=xterm-256color
-fi
-
