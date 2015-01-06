@@ -3,17 +3,17 @@ username = Javier Aravena Claramunt <javier@aravenas.com>
 style = compact
 
 [extensions]
-graphlog = 
+graphlog =
 color =
-inotify = 
-churn = 
-mq = 
-notify = 
-progress = 
-rebase = 
-record = 
-shelve = 
-strip = 
-zeroconf = 
-purge = 
+churn =
+mq =
+notify =
+progress =
+rebase =
+record =
+shelve =
+strip =
+zeroconf =
+purge =
+pager =
 
