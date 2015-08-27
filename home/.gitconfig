@@ -1,8 +1,8 @@
 [user]
-	email = javier@aravenas.com
-	name = Javier Aravena Claramunt
-[push]
-	default = simple
+	email = javac@amazon.com
+	name = Javier Aravena
 [alias]
 	st = status
 	ci = commit
+[commit]
+	template = /home/local/ANT/javac/.gitcommit.tmpl
