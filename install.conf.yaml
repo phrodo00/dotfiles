@@ -1,0 +1,32 @@
+- defaults:
+    link:
+        relink: true
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+
+- clean: ['~']
+
+- link:
+    ~/.gitconfig: gitconfig
+    ~/.tmux.conf: tmux.conf
+
+    ~/.config/nvim/init.vim:
+        create: true
+        path: init.vim
+    ~/.config/nvim/autoload/plug.vim:
+        create: true
+        path: vim-plug/plug.vim
+    ~/.vimrc: init.vim
+    ~/.vim/autoload/plug.vim:
+        create: true
+        path: vim-plug/plug.vim
+
+    ~/.zprezto: prezto
+    ~/.zshrc: zshrc
+    ~/.zpreztorc: zpreztorc
+    ~/.zprofile: zprofile
+    ~/.zlogout: zlogout
+    ~/.zshenv: zshenv
+    ~/.zlogin: zlogin
+

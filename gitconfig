@@ -1,0 +1,10 @@
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+	unstage = reset HEAD --
+	last = log -1 --decorate HEAD
+[user]
+	name = Javier Aravena
+	email = javier@aravena.org
